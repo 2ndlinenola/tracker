@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css"rel="stylesheet"type="text/css" />
+
+        <style>
+          html, body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px
+          }
+
+          #map_canvas {
+            height: 40%;
+            width:  70%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 80px;
+            margin-bottom: 23px;
+          }
+        </style>
+
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="phonegap.js"></script>
+
+        <script type="text/javascript">
+          function onReady () {
+            var map = new google.maps.Map(document.getElementById("map_canvas"), {
+              disableDefaultUI: true,
+              zoom: 15,
+              center: new google.maps.LatLng(29.9511782,-90.0689848), // Jackson Square!
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            var marker = null;
+
+            navigator.geolocation.watchPosition((function(position) {
+               document.getElementById("position").innerHTML =
+                 "Latitude: " + position.coords.latitude + "<br />" +
+                 "Longitude: " + position.coords.longitude + "<br />";
+
+               var position = new google.maps.LatLng(
+                 position.coords.latitude,
+                 position.coords.longitude
+               );
+
+               if (marker) {
+                 marker.setMap(null);
+                 marker = null;
+               }
+
+               marker = new google.maps.Marker({
+                 position: position,
+                 map: map,
+                 title: "position"
+               });
+
+               map.setCenter(position);
+            }), (function(error) {
+              document.getElementById("position").innerHTML = "Error " + error.code + ": " + error.message;
+            }), {
+              enableHighAccuracy: true
+            });
+          };
+
+          document.addEventListener("deviceready", onReady, false);
+        </script>
+
+        <title>Second Line NOLA Tracker</title>
+    </head>
+    <body>
+        <div id="map_canvas"></div>
+        <div class="app">
+          <h1>Second Line NOLA Tracker</h1>
+          <p id="position">Waiting for position..</p>
+        </div>
+    </body>
+</html>

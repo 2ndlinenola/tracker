@@ -6,20 +6,16 @@
         id        = "com.seconndlinenola.tracker"
         version   = "1.0.0">
 
-    <name>2ndLine Tracker</name>
+    <name>Second Line Tracker</name>
 
     <description>
       Tracker app for Second Line NOLA
     </description>
 
     <author href="http://2ndlinenola.com" email="support@2ndlinenola.com">
-        2ndline NOLA Team
+        Second Line NOLA Team
     </author>
 
-    <!--
-        Enable individual API permissions here.
-        The "device" permission is required for the 'deviceready' event.
-    -->
     <feature name="http://api.phonegap.com/1.0/device" />
     <feature name="http://api.phonegap.com/1.0/geolocation" />
 
@@ -36,12 +32,11 @@
     <preference name="exit-on-suspend"            value="false" />          <!-- ios: if set to true, app will terminate when home button is pressed -->
     <preference name="show-splash-screen-spinner" value="true" />           <!-- ios: if set to false, the spinner won't appear on the splash screen during app loading -->
     <preference name="auto-hide-splash-screen"    value="true" />           <!-- ios: if set to false, the splash screen must be hidden using a JavaScript API -->
-    <preference name="disable-cursor"             value="false" />          <!-- blackberry: prevents a mouse-icon/cursor from being displayed on the app -->
     <preference name="android-minSdkVersion"      value="7" />              <!-- android: MIN SDK version supported on the target device. MAX version is blank by default. -->
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
 
     <gap:plugin name="org.apache.cordova.geolocation" version="0.3.6" />
-    <gap:plugin name="nl.x-services.plugins.insomnia" version="3.0" />
+    <gap:plugin name="org.transistorsoft.cordova.background-geolocation" version="0.1.0" />
 
     <!-- Define app icon for each platform. -->
     <icon src="icon.png" />

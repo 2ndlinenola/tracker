@@ -7,23 +7,35 @@
         "res/xml/config.xml": {
             "/*": {
                 "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.GeoBroker\" /></feature>": 1,
-                "<feature name=\"Insomnia\"><param name=\"android-package\" value=\"nl.xservices.plugins.Insomnia\" /></feature>": 1
+                "<feature name=\"BackgroundGeoLocation\"><param name=\"android-package\" value=\"com.tenforwardconsulting.cordova.bgloc.BackgroundGpsPlugin\" /></feature>": 1
             }
         },
         "AndroidManifest.xml": {
             "/*": {
                 "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />": 1,
                 "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />": 1
+            },
+            "/manifest/application": {
+                "<service android:enabled=\"true\" android:name=\"com.tenforwardconsulting.cordova.bgloc.LocationUpdateService\" android:process=\":remote\" />": 1
+            },
+            "/manifest": {
+                "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />": 1,
+                "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />": 1,
+                "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />": 1,
+                "<uses-permission android:name=\"android.permission.ACCESS_LOCATION_EXTRA_COMMANDS\" />": 1,
+                "<uses-permission android:name=\"android.permission.INTERNET\" />": 1,
+                "<uses-permission android:name=\"android.permission.WAKE_LOCK\" />": 1
             }
         }
     },
     "installed_plugins": {
-        "org.apache.cordova.geolocation": {
-            "PACKAGE_NAME": "com.seconndlinenola.tracker"
-        },
-        "nl.x-services.plugins.insomnia": {
+        "org.transistorsoft.cordova.background-geolocation": {
             "PACKAGE_NAME": "com.seconndlinenola.tracker"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "org.apache.cordova.geolocation": {
+            "PACKAGE_NAME": "com.seconndlinenola.tracker"
+        }
+    }
 }

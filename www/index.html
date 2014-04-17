@@ -3,25 +3,19 @@
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="css/googlemaps.css" />
 
         <style>
-          html, body {
-            height: 100%;
-            margin: 0px;
-            padding: 0px
+          .container-fluid, .container {
+            text-align: center;
           }
 
-          #map_canvas {
-            height: 40%;
-            width:  70%;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 80px;
+          #map-canvas {
+            height: 350px;
+            margin-top: 23px;
             margin-bottom: 23px;
           }
         </style>
@@ -29,6 +23,7 @@
         <script type="text/javascript" src="js/socket.io.js"></script>
         <script type="text/javascript" src="js/googlemaps.js"></script>
         <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="phonegap.js"></script>
         <script type="text/javascript" src="js/tracker.js"></script>
 
@@ -39,10 +34,21 @@
         <title>Second Line NOLA Tracker</title>
     </head>
     <body>
-        <div id="map_canvas"></div>
-        <div class="app">
-          <h1>Second Line NOLA Tracker</h1>
-          <p id="position">Waiting for device..</p>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-offset-2 col-md-8">
+            <div id="map-canvas"></div>
+            <div class="col-md-offset-4 col-md-4">
+              <h3>Second Line NOLA Tracker</h3>
+              <p id="position" class="bg-info">
+                Waiting for device..
+              </p>
+              <button type="button" class="btn btn-success" disabled="disabled" id="start">
+                Start Tracking
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
     </body>
 </html>

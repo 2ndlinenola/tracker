@@ -28,9 +28,12 @@
 
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/Insomnia.js"></script>
 
         <script type="text/javascript">
           function onReady () {
+            window.plugins.insomnia.keepAwake();
+
             var map = new google.maps.Map(document.getElementById("map_canvas"), {
               disableDefaultUI: true,
               zoom: 15,

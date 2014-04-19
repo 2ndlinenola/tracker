@@ -16,11 +16,14 @@
         Second Line NOLA Team
     </author>
 
+    <gap:platform name="ios" />
+    <gap:platform name="android" />
+
     <feature name="http://api.phonegap.com/1.0/device" />
     <feature name="http://api.phonegap.com/1.0/geolocation" />
 
     <!-- Customize your app and platform with the preference element. -->
-    <!-- <preference name="phonegap-version"      value="3.4.0" /> -->      <!-- all: current version of PhoneGap -->
+    <preference name="phonegap-version"           value="3.4.0" />          <!-- all: current version of PhoneGap -->
     <preference name="orientation"                value="portrait" />       <!-- all: default means both landscape and portrait are enabled -->
     <preference name="target-device"              value="universal" />      <!-- all: possible values handset, tablet, or universal -->
     <preference name="fullscreen"                 value="false" />          <!-- all: hides the status bar at the top of the screen -->
@@ -35,7 +38,6 @@
     <preference name="android-minSdkVersion"      value="7" />              <!-- android: MIN SDK version supported on the target device. MAX version is blank by default. -->
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
 
-    <gap:plugin name="org.apache.cordova.geolocation" version="0.3.6" />
     <gap:plugin name="org.transistorsoft.cordova.background-geolocation" version="0.1.0" />
 
     <!-- Define app icon for each platform. -->

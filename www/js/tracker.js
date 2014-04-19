@@ -10,7 +10,7 @@
   Map = (function() {
     function Map() {
       var center;
-      center = new google.maps.LatLng(29.9511782, -90.0689848);
+      center = new google.maps.LatLng(29.947877, -90.114755);
       this.marker = null;
       this.map = new google.maps.Map(document.getElementById("map-canvas"), {
         disableDefaultUI: true,
@@ -19,6 +19,10 @@
         center: center,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       });
+      this.route = new google.maps.KmlLayer({
+        url: "http://mapsengine.google.com/map/u/0/kml?mid=zaIRRFV8XaRQ.k2GoQJ3ppZFs"
+      });
+      this.route.setMap(this.map);
     }
 
     Map.prototype.setPosition = function(lat, lng) {
@@ -33,7 +37,8 @@
         map: this.map,
         title: "position"
       });
-      return this.map.setCenter(position);
+      this.map.setCenter(position);
+      return this.map.setZoom(15);
     };
 
     Map.prototype.clearPosition = function() {
@@ -116,6 +121,7 @@
           return $("#start").removeClass("btn-success").addClass("btn-danger").text("Stop Tracking");
         } else {
           _this.bgGeo.stop();
+          $("#position").text("Waiting for position..");
           $("#start").removeClass("btn-danger").addClass("btn-success").text("Start Tracking");
           return $.post(_this.clearUrl);
         }

@@ -5,7 +5,7 @@ serverPort = 80
 
 class Map
   constructor: ->
-    center = new google.maps.LatLng 29.9511782,-90.0689848 # Jackson square!
+    center = new google.maps.LatLng 29.947877, -90.114755
     @marker = null
 
     @map = new google.maps.Map document.getElementById("map-canvas"),
@@ -14,6 +14,10 @@ class Map
       zoom:             15
       center:           center
       mapTypeId:        google.maps.MapTypeId.ROADMAP
+
+    @route = new google.maps.KmlLayer
+      url: "http://mapsengine.google.com/map/u/0/kml?mid=zaIRRFV8XaRQ.k2GoQJ3ppZFs"
+    @route.setMap @map
 
   setPosition: (lat, lng) ->
     if @marker?
@@ -28,6 +32,7 @@ class Map
       title: "position"
 
     @map.setCenter position
+    @map.setZoom 15
 
   clearPosition: ->
     if @marker?
@@ -89,6 +94,7 @@ class BackgroundTracking
         $("#start").removeClass("btn-success").addClass("btn-danger").text "Stop Tracking"
       else
         @bgGeo.stop()
+        $("#position").text "Waiting for position.."
         $("#start").removeClass("btn-danger").addClass("btn-success").text "Start Tracking"
         $.post @clearUrl
 

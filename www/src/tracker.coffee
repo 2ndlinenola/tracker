@@ -67,8 +67,7 @@ class BackgroundTracking
     @reportUrl = "#{serverHost}/report"
     @clearUrl  = "#{serverHost}/clear"
 
-    window.navigator.geolocation.getCurrentPosition -> # Dummy to prompt for right
-
+  configure: ->
     @bgGeo = window.plugins?.backgroundGeoLocation ||
       configure: ->
         console.log "geo configure"
@@ -85,12 +84,17 @@ class BackgroundTracking
       stationaryRadius: 20
       distanceFilter:   30
 
-  start: ->
+  setupUi: ->
     $("#start").removeAttr "disabled"
 
     $("#start").click =>
       if $("#start").hasClass "btn-success"
+        # Fetch position right away..
+        window.navigator.geolocation.getCurrentPosition @onPosition, @onFailure
+
+        # Start background service
         @bgGeo.start()
+
         $("#start").removeClass("btn-success").addClass("btn-danger").text "Stop Tracking"
       else
         @bgGeo.stop()
@@ -98,7 +102,16 @@ class BackgroundTracking
         $("#start").removeClass("btn-danger").addClass("btn-success").text "Start Tracking"
         $.post @clearUrl
 
+  start: ->
+    # Will prompt for location access
+    window.navigator.geolocation.getCurrentPosition ->
+    @configure()
+    @setupUi()
+
   onPosition: (position) =>
+    return if $("#start").hasClass "btn-success"
+
+    position = position.coords || position
     $.post @reportUrl, {location: position}, null, "json"
     @bgGeo.finish()
 

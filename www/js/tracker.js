@@ -86,10 +86,12 @@
     function BackgroundTracking() {
       this.onFailure = __bind(this.onFailure, this);
       this.onPosition = __bind(this.onPosition, this);
-      var _ref;
       this.reportUrl = "" + serverHost + "/report";
       this.clearUrl = "" + serverHost + "/clear";
-      window.navigator.geolocation.getCurrentPosition(function() {});
+    }
+
+    BackgroundTracking.prototype.configure = function() {
+      var _ref;
       this.bgGeo = ((_ref = window.plugins) != null ? _ref.backgroundGeoLocation : void 0) || {
         configure: function() {
           return console.log("geo configure");
@@ -104,19 +106,20 @@
           return console.log("geo finish");
         }
       };
-      this.bgGeo.configure(this.onPosition, this.onFailure, {
+      return this.bgGeo.configure(this.onPosition, this.onFailure, {
         url: this.reportUrl,
         desiredAccuracy: 0,
         stationaryRadius: 20,
         distanceFilter: 30
       });
-    }
+    };
 
-    BackgroundTracking.prototype.start = function() {
+    BackgroundTracking.prototype.setupUi = function() {
       var _this = this;
       $("#start").removeAttr("disabled");
       return $("#start").click(function() {
         if ($("#start").hasClass("btn-success")) {
+          window.navigator.geolocation.getCurrentPosition(_this.onPosition, _this.onFailure);
           _this.bgGeo.start();
           return $("#start").removeClass("btn-success").addClass("btn-danger").text("Stop Tracking");
         } else {
@@ -128,7 +131,17 @@
       });
     };
 
+    BackgroundTracking.prototype.start = function() {
+      window.navigator.geolocation.getCurrentPosition(function() {});
+      this.configure();
+      return this.setupUi();
+    };
+
     BackgroundTracking.prototype.onPosition = function(position) {
+      if ($("#start").hasClass("btn-success")) {
+        return;
+      }
+      position = position.coords || position;
       $.post(this.reportUrl, {
         location: position
       }, null, "json");

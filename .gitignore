@@ -1,5 +1,1 @@
-hooks/
-platforms/
 *.sw*
-.DS_Store
-.cordova

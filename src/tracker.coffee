@@ -62,10 +62,15 @@ class Ui
   onClear: =>
     @map.clearPosition()
 
-class BackgroundTracking
+class Tracking
   constructor: ->
     @reportUrl = "#{serverHost}/report"
     @clearUrl  = "#{serverHost}/clear"
+
+    @pollingInterval = 1 * 60 * 1000 # 1 minute
+
+    document.addEventListener "pause",  @onPause,  false
+    document.addEventListener "resume", @onResume, false
 
   configure: ->
     @bgGeo = window.plugins?.backgroundGeoLocation ||
@@ -84,27 +89,30 @@ class BackgroundTracking
       stationaryRadius: 20
       distanceFilter:   30
 
+  getCurrentPosition: =>
+    window.navigator.geolocation.getCurrentPosition @onPosition, @onFailure
+
+  startForegroundTracker: ->
+    @getCurrentPosition()
+    @foregroundTracker = setInterval @getCurrentPosition, @pollingInterval
+
+  stopForegroundTracker: ->
+    clearInterval @foregroundTracker if @foregroundTracker?
+
   setupUi: ->
     $("#start").removeAttr "disabled"
 
     $("#start").click =>
       if $("#start").hasClass "btn-success"
-        # Fetch position right away..
-        window.navigator.geolocation.getCurrentPosition @onPosition, @onFailure
-
-        # Start background service
-        @bgGeo.start()
-
+        @startForegroundTracker()
         $("#start").removeClass("btn-success").addClass("btn-danger").text "Stop Tracking"
       else
-        @bgGeo.stop()
+        $.post @clearUrl
+        @stopForegroundTracker()
         $("#position").text "Waiting for position.."
         $("#start").removeClass("btn-danger").addClass("btn-success").text "Start Tracking"
-        $.post @clearUrl
 
   start: ->
-    # Will prompt for location access
-    window.navigator.geolocation.getCurrentPosition ->
     @configure()
     @setupUi()
 
@@ -118,13 +126,21 @@ class BackgroundTracking
   onFailure: (error) =>
     console.log "error", error
 
+  onPause: =>
+    return unless $("#start").hasClass "btn-danger"
+    # Start background service
+    @bgGeo.start()
+
+  onResume: =>
+    @bgGeo.stop()
+
 class window.Tracker
   constructor: ->
     document.addEventListener "deviceready", @onReady, false
 
   onReady: =>
     @ui       = new Ui
-    @tracking = new BackgroundTracking
+    @tracking = new Tracking
 
     @ui.start()
     @tracking.start()

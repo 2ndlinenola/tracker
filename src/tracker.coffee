@@ -43,8 +43,7 @@ class Ui
   start: ->
     @map = new Map
     @socket = io.connect serverHost,
-      transports: ["xhr-polling"]
-      port:       serverPort
+      port: serverPort
 
     @socket.on "position", @onPosition
     @socket.on "clear", @onClear

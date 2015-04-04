@@ -61,7 +61,6 @@
     Ui.prototype.start = function() {
       this.map = new Map;
       this.socket = io.connect(serverHost, {
-        transports: ["xhr-polling"],
         port: serverPort
       });
       this.socket.on("position", this.onPosition);

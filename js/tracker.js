@@ -20,7 +20,7 @@
         mapTypeId: google.maps.MapTypeId.ROADMAP
       });
       this.route = new google.maps.KmlLayer({
-        url: "http://mapsengine.google.com/map/u/0/kml?mid=zaIRRFV8XaRQ.k2GoQJ3ppZFs"
+        url: "http://www.google.com/maps/d/u/0/kml?mid=zLwZMY18RMfY.kBd6K2nerOe8"
       });
       this.route.setMap(this.map);
     }

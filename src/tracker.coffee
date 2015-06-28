@@ -16,7 +16,7 @@ class Map
       mapTypeId:        google.maps.MapTypeId.ROADMAP
 
     @route = new google.maps.KmlLayer
-      url: "http://www.google.com/maps/d/u/0/kml?mid=zLwZMY18RMfY.kBd6K2nerOe8"
+      url: "http://www.google.com/maps/d/u/0/kml?mid=zKsXt-YMXKYU.k5JzyY_3LEOo"
     @route.setMap @map
 
   setPosition: (lat, lng) ->
